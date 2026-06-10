@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask,render_template
 from routes.auth import auth
 from routes.notes import notes
 
@@ -11,7 +11,7 @@ app.register_blueprint(notes)
 
 @app.route("/")
 def home():
-    return "Notes app running"
+    return render_template("index.html")
 
 if __name__ == '__main__':
     app.run(debug = True)

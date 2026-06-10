@@ -1,6 +1,6 @@
-from flask import request, Blueprint
+from flask import request, Blueprint, session, jsonify
 from models.note_model import create_notes, get_notes
-from flask import session, jsonify
+
 
 
 notes = Blueprint('notes',__name__)

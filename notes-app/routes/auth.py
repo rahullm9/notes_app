@@ -1,6 +1,5 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, session, jsonify
 from models.user_model import create_user, get_user_by_email
-from flask import session, jsonify
 
 import bcrypt
 
