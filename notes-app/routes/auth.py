@@ -1,13 +1,15 @@
-from flask import Blueprint, request, session, jsonify
+from flask import Blueprint, request, jsonify, render_template, redirect, flash
 from models.user_model import create_user, get_user_by_email
 
 import bcrypt
 
 auth = Blueprint("auth", __name__)
 
-@auth.route("/register", methods = ['POST'])
+@auth.route("/register", methods = ['POST', 'GET'])
 def register():
-    data = request.get_json()
+    if request.method == 'GET':
+        return render_template('index.html')
+    data = request.form
 
     username = data.get('username')
     email = data.get('email')
@@ -23,12 +25,15 @@ def register():
 
     create_user(username, email, hashed_password.decode("utf-8"))
 
-    return 'User registered successfully'
+    flash('Registration successful', 'success')
+    return redirect('/login')
 
 
-@auth.route('/login', methods = ['POST'])
+@auth.route('/login', methods = ['POST', 'GET'])
 def login():
-    data = request.get_json()
+    if request.method == 'GET':
+        return render_template('index.html')
+    data = request.form
 
     email = data.get('email')
     password = data.get('password')
@@ -45,7 +50,6 @@ def login():
         stored_password.encode("utf-8")
     )
 
-    if password_match:
-        session['user_id'] = user[0]
-        return jsonify({"message": f"{user[1]} welcome Back"}), 200
-    return "Invalid password"
+    if not password_match:
+        return jsonify({"message": "Invalid email or password"}),401
+    return jsonify({"message": "Login successful"})
