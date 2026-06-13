@@ -24,8 +24,7 @@ def register():
         return jsonify({"message": "This Email already exist Try Login!"})
 
     create_user(username, email, hashed_password.decode("utf-8"))
-
-    flash('Registration successful', 'success')
+    flash("Registration successful!", "success")
     return redirect('/login')
 
 
