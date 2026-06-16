@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, render_template, redirect, flash
+from flask import Blueprint, request, jsonify, render_template, redirect, flash, session
 from models.user_model import create_user, get_user_by_email
 
 import bcrypt
@@ -51,4 +51,22 @@ def login():
 
     if not password_match:
         return jsonify({"message": "Invalid email or password"}),401
-    return jsonify({"message": "Login successful"})
+    
+    session['user_id'] = user[0]
+    session['username'] = user[1]
+
+    return redirect('/dashboard')
+
+@auth.route('/dashboard', methods = ['GET'])
+def dashboard():
+    if 'user_id' not in session:
+        flash("Please login first.", "error")
+        return redirect('/login')
+    username = session.get('username')
+    return render_template('dashboard.html', username=username)
+
+@auth.route('/logout')
+def logout():
+    session.clear()
+    flash("Logout successfully.", "success")
+    return redirect('/login')
