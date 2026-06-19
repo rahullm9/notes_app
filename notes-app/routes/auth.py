@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify, render_template, redirect, flash, session
 from models.user_model import create_user, get_user_by_email
+from models.note_model import get_notes
 
 import bcrypt
 
@@ -63,7 +64,9 @@ def dashboard():
         flash("Please login first.", "error")
         return redirect('/login')
     username = session.get('username')
-    return render_template('dashboard.html', username=username)
+    user_id = session.get('user_id')
+    notes = get_notes(user_id)
+    return render_template('dashboard.html', username=username, notes=notes)
 
 @auth.route('/logout')
 def logout():

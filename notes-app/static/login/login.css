@@ -1,26 +1,30 @@
+/* ============================================================
+   LOGIN.CSS — Neo-Brutalist Design System
+   ============================================================ */
+
 /* --- Design System & Variables --- */
 :root {
-  --font-sans: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    sans-serif;
+  --font-mono: "Space Mono", "Courier New", monospace;
 
-  /* Harmonious, modern color palette */
-  --bg-dark: #080b11;
-  --bg-card: rgba(15, 22, 36, 0.65);
-  --bg-input: rgba(10, 15, 26, 0.85);
-  --border-color: rgba(255, 255, 255, 0.08);
-  --border-focus: #6366f1;
+  /* Brutalist palette */
+  --bg-cream: #fffdf5;
+  --bg-card: #ffffff;
+  --bg-input: #ffffff;
+  --border-thick: #000000;
+  --border-focus: #4f46e5;
 
-  --color-primary: #6366f1;
-  --color-secondary: #a855f7;
-  --color-accent: #3b82f6;
-  --color-text-main: #f8fafc;
-  --color-text-muted: #94a3b8;
-  --color-error: #ef4444;
-  --color-success: #10b981;
+  --color-primary: #4f46e5;
+  --color-secondary: #7c3aed;
+  --color-accent: #eab308;
+  --color-text-main: #0a0a0a;
+  --color-text-muted: #525252;
+  --color-error: #dc2626;
+  --color-success: #16a34a;
 
-  --card-radius: 24px;
-  --input-radius: 12px;
-  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --border-width: 3px;
+  --shadow-offset: 5px;
+  --shadow-hard: var(--shadow-offset) var(--shadow-offset) 0 #000;
+  --shadow-hard-sm: 3px 3px 0 #000;
 }
 
 /* --- Reset & Global Styles --- */
@@ -31,8 +35,8 @@
 }
 
 body {
-  font-family: var(--font-sans);
-  background-color: var(--bg-dark);
+  font-family: var(--font-mono);
+  background-color: var(--bg-cream);
   color: var(--color-text-main);
   min-height: 100vh;
   width: 100%;
@@ -41,91 +45,38 @@ body {
   align-items: center;
   overflow-x: hidden;
   position: relative;
+  /* Brutalist dot grid pattern */
+  background-image: radial-gradient(circle, #d4d4d4 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
-/* --- Ambient Background Glows (Mesh Gradient) --- */
+/* --- Background glows: hidden in brutalism --- */
 .bg-glow-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  overflow: hidden;
-  pointer-events: none;
+  display: none;
 }
 
-.glow-orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(140px);
-  opacity: 0.45;
-  animation: floatOrb 20s infinite alternate ease-in-out;
-}
-
-.glow-orb-1 {
-  background: radial-gradient(circle, var(--color-primary) 0%, transparent 70%);
-  width: 600px;
-  height: 600px;
-  top: -150px;
-  left: -100px;
-}
-
-.glow-orb-2 {
-  background: radial-gradient(
-    circle,
-    var(--color-secondary) 0%,
-    transparent 70%
-  );
-  width: 500px;
-  height: 500px;
-  bottom: -100px;
-  right: -100px;
-  animation-delay: -5s;
-}
-
+.glow-orb,
+.glow-orb-1,
+.glow-orb-2,
 .glow-orb-3 {
-  background: radial-gradient(circle, var(--color-accent) 0%, transparent 70%);
-  width: 400px;
-  height: 400px;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0.25;
-  animation-duration: 25s;
-}
-
-@keyframes floatOrb {
-  0% {
-    transform: translate(0, 0) scale(1);
-  }
-
-  100% {
-    transform: translate(40px, 40px) scale(1.1);
-  }
+  display: none;
 }
 
 /* --- Main Container & Card --- */
 .app-wrapper {
   width: 100%;
-  max-width: 440px;
+  max-width: 460px;
   padding: 24px;
-  perspective: 1000px;
 }
 
 .auth-card {
   background: var(--bg-card);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid var(--border-color);
-  border-radius: var(--card-radius);
+  border: var(--border-width) solid var(--border-thick);
+  border-radius: 0;
   padding: 40px 32px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  box-shadow: var(--shadow-hard);
   position: relative;
   overflow: hidden;
-  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-  transform-style: preserve-3d;
 }
 
 .auth-card::before {
@@ -134,12 +85,8 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  height: 4px;
-  background: linear-gradient(
-    90deg,
-    var(--color-primary),
-    var(--color-secondary)
-  );
+  height: 6px;
+  background: var(--color-primary);
 }
 
 /* --- Card Header --- */
@@ -154,24 +101,19 @@ body {
   justify-content: center;
   width: 56px;
   height: 56px;
-  background: linear-gradient(
-    135deg,
-    rgba(99, 102, 241, 0.15),
-    rgba(168, 85, 247, 0.15)
-  );
-  border: 1px solid rgba(99, 102, 241, 0.3);
-  border-radius: 16px;
+  background: var(--color-accent);
+  border: var(--border-width) solid var(--border-thick);
+  border-radius: 0;
   margin-bottom: 16px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  position: relative;
+  box-shadow: var(--shadow-hard-sm);
 }
 
 .brand-icon-wrapper svg {
   width: 28px;
   height: 28px;
   fill: none;
-  stroke: url(#brand-gradient);
-  stroke-width: 2;
+  stroke: #000;
+  stroke-width: 2.5;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
@@ -179,18 +121,17 @@ body {
 .brand-title {
   font-size: 28px;
   font-weight: 700;
-  letter-spacing: -0.5px;
-  background: linear-gradient(135deg, #ffffff 30%, #cbd5e1 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  letter-spacing: -1px;
+  color: var(--color-text-main);
+  text-transform: uppercase;
   margin-bottom: 6px;
 }
 
 .brand-subtitle {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--color-text-muted);
   font-weight: 400;
+  letter-spacing: 0.5px;
 }
 
 /* --- Form Sections & Switching Mechanics --- */
@@ -201,8 +142,7 @@ body {
 
 .form-wrapper {
   width: 100%;
-  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-    visibility 0.35s;
+  transition: opacity 0.15s ease, visibility 0.15s;
 }
 
 /* Active / Inactive states for forms */
@@ -211,14 +151,12 @@ body {
   top: 0;
   left: 0;
   opacity: 0;
-  transform: translateY(20px) scale(0.95);
   pointer-events: none;
   visibility: hidden;
 }
 
 .form-wrapper.active-form {
   opacity: 1;
-  transform: translateY(0) scale(1);
   pointer-events: auto;
   visibility: visible;
 }
@@ -238,32 +176,31 @@ body {
 
 .input-icon {
   position: absolute;
-  left: 16px;
+  left: 14px;
   width: 20px;
   height: 20px;
   color: var(--color-text-muted);
   pointer-events: none;
-  transition: var(--transition-smooth);
+  transition: color 0.15s ease;
 }
 
 .form-control {
   width: 100%;
   background-color: var(--bg-input);
-  border: 1px solid var(--border-color);
-  border-radius: var(--input-radius);
-  padding: 16px 16px 16px 48px;
+  border: var(--border-width) solid var(--border-thick);
+  border-radius: 0;
+  padding: 14px 14px 14px 46px;
   color: var(--color-text-main);
-  font-size: 15px;
-  font-family: var(--font-sans);
+  font-size: 14px;
+  font-family: var(--font-mono);
   outline: none;
-  transition: var(--transition-smooth);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-/* Input Focus and Autofill styles */
+/* Input Focus */
 .form-control:focus {
   border-color: var(--border-focus);
-  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
-  background-color: rgba(10, 15, 26, 0.95);
+  box-shadow: 3px 3px 0 var(--color-primary);
 }
 
 .form-control:focus ~ .input-icon {
@@ -273,34 +210,35 @@ body {
 /* --- Floating Label Effect --- */
 .form-label {
   position: absolute;
-  left: 48px;
+  left: 46px;
   top: 50%;
   transform: translateY(-50%);
   color: var(--color-text-muted);
-  font-size: 15px;
+  font-size: 14px;
   pointer-events: none;
-  transition: var(--transition-smooth);
+  transition: all 0.15s ease;
   background: transparent;
+  font-family: var(--font-mono);
 }
 
 /* Float label to top when focused or filled */
 .form-control:focus ~ .form-label,
 .form-control:not(:placeholder-shown) ~ .form-label {
   top: 0;
-  left: 16px;
+  left: 10px;
   transform: translateY(-50%) scale(0.8);
   padding: 0 6px;
   color: var(--color-primary);
-  font-weight: 500;
-  background: #0d1321;
-  /* Solid matching background to mask the border line */
-  border-radius: 4px;
+  font-weight: 700;
+  background: var(--bg-card);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 /* --- Password Visibility Toggle --- */
 .password-toggle-btn {
   position: absolute;
-  right: 16px;
+  right: 14px;
   background: none;
   border: none;
   color: var(--color-text-muted);
@@ -309,7 +247,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: var(--transition-smooth);
+  transition: color 0.15s ease;
 }
 
 .password-toggle-btn:hover {
@@ -321,7 +259,7 @@ body {
   height: 20px;
 }
 
-/* Adjust padding for password inputs to make space for the right button */
+/* Adjust padding for password inputs */
 .form-control-password {
   padding-right: 48px;
 }
@@ -334,35 +272,33 @@ body {
   margin-bottom: 24px;
   cursor: pointer;
   user-select: none;
-  font-size: 14px;
+  font-size: 13px;
   color: var(--color-text-muted);
 }
 
 .checkbox-container input {
   display: none;
-  /* Hide native checkbox */
 }
 
 .custom-checkbox {
-  width: 18px;
-  height: 18px;
-  border: 1.5px solid var(--border-color);
-  border-radius: 5px;
+  width: 20px;
+  height: 20px;
+  border: var(--border-width) solid var(--border-thick);
+  border-radius: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: var(--transition-smooth);
   background-color: var(--bg-input);
+  transition: all 0.1s ease;
 }
 
 .checkbox-container:hover .custom-checkbox {
-  border-color: rgba(99, 102, 241, 0.5);
+  background-color: #f5f5f5;
 }
 
 .checkbox-container input:checked + .custom-checkbox {
   background-color: var(--color-primary);
-  border-color: var(--color-primary);
-  box-shadow: 0 0 8px rgba(99, 102, 241, 0.4);
+  border-color: var(--border-thick);
 }
 
 .custom-checkbox svg {
@@ -383,134 +319,122 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 24px;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .forgot-password-link {
   color: var(--color-text-muted);
   text-decoration: none;
-  transition: var(--transition-smooth);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid transparent;
+  transition: all 0.1s ease;
 }
 
 .forgot-password-link:hover {
   color: var(--color-primary);
-  text-shadow: 0 0 8px rgba(99, 102, 241, 0.3);
+  border-bottom-color: var(--color-primary);
 }
 
 /* --- Styled Buttons --- */
 .btn-submit {
   width: 100%;
-  background: linear-gradient(
-    135deg,
-    var(--color-primary) 0%,
-    var(--color-secondary) 100%
-  );
+  background: var(--color-primary);
   color: #ffffff;
-  border: none;
-  border-radius: var(--input-radius);
+  border: var(--border-width) solid var(--border-thick);
+  border-radius: 0;
   padding: 16px;
-  font-size: 16px;
-  font-weight: 600;
-  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 700;
+  font-family: var(--font-mono);
   cursor: pointer;
-  transition: var(--transition-smooth);
-  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.25);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: var(--shadow-hard);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
   position: relative;
   overflow: hidden;
 }
 
 .btn-submit::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -50%;
-  width: 200%;
-  height: 100%;
-  background: linear-gradient(
-    to right,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.15) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  transform: skewX(-25deg);
-  transition: 0.75s;
-  pointer-events: none;
+  /* Remove shimmer effect for brutalism */
+  display: none;
 }
 
 .btn-submit:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(99, 102, 241, 0.45);
-}
-
-.btn-submit:hover::after {
-  left: 125%;
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 #000;
 }
 
 .btn-submit:active {
-  transform: translateY(1px);
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 #000;
 }
 
 /* --- Footer Toggle Texts --- */
 .auth-footer {
   text-align: center;
   margin-top: 28px;
-  font-size: 14px;
+  font-size: 13px;
   color: var(--color-text-muted);
 }
 
 .auth-toggle-link {
   color: var(--color-primary);
   text-decoration: none;
-  font-weight: 600;
-  transition: var(--transition-smooth);
+  font-weight: 700;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--color-primary);
   margin-left: 4px;
+  transition: all 0.1s ease;
 }
 
 .auth-toggle-link:hover {
   color: var(--color-secondary);
-  text-decoration: underline;
+  border-bottom-color: var(--color-secondary);
 }
 
 /* --- Feedback/Error Block --- */
 .status-message-box {
   margin-bottom: 20px;
   padding: 12px 16px;
-  border-radius: var(--input-radius);
-  font-size: 14px;
-  display: flex;
+  border-radius: 0;
+  font-size: 13px;
   align-items: center;
   gap: 10px;
   display: none;
-  /* Controlled dynamically by developer */
+  border: var(--border-width) solid var(--border-thick);
+  font-weight: 700;
 }
 
 .status-message-box.error-box {
-  background-color: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.2);
-  color: #fca5a5;
+  background-color: #fef2f2;
+  border-color: var(--color-error);
+  color: var(--color-error);
   display: flex;
 }
 
 .status-message-box.success-box {
-  background-color: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.2);
-  color: #a7f3d0;
+  background-color: #f0fdf4;
+  border-color: var(--color-success);
+  color: var(--color-success);
   display: flex;
 }
 
-/* Responsive adaptation */
+/* Responsive */
 @media (max-width: 480px) {
   .auth-card {
-    padding: 32px 24px;
+    padding: 32px 20px;
+    box-shadow: 3px 3px 0 #000;
   }
 
   .brand-title {
-    font-size: 24px;
+    font-size: 22px;
   }
 }
 
-/* --- Modern Toast Notifications --- */
+/* --- Brutalist Toast Notifications --- */
 .toast-container {
   position: fixed;
   top: 24px;
@@ -524,34 +448,32 @@ body {
 }
 
 .toast-card {
-  background: rgba(15, 22, 36, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
-  padding: 16px;
+  background: var(--bg-card);
+  border: var(--border-width) solid var(--border-thick);
+  border-radius: 0;
+  padding: 14px 16px;
   display: flex;
   align-items: center;
   gap: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35),
-              inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  animation: toastSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-hard);
+  animation: toastSlideIn 0.2s ease forwards;
 }
 
 .toast-card.toast-fade-out {
   opacity: 0;
-  transform: translateY(-20px) scale(0.9);
+  transform: translateY(-10px);
+  transition: all 0.2s ease;
 }
 
 .toast-icon {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  border-radius: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  border: 2px solid var(--border-thick);
 }
 
 .toast-icon svg {
@@ -560,23 +482,21 @@ body {
 }
 
 .toast-success .toast-icon {
-  background-color: rgba(16, 185, 129, 0.15);
-  color: #10b981;
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  background-color: #bbf7d0;
+  color: var(--color-success);
 }
 
 .toast-success {
-  border-left: 4px solid #10b981;
+  border-left: 6px solid var(--color-success);
 }
 
 .toast-error .toast-icon {
-  background-color: rgba(239, 68, 68, 0.15);
-  color: #ef4444;
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  background-color: #fecaca;
+  color: var(--color-error);
 }
 
 .toast-error {
-  border-left: 4px solid #ef4444;
+  border-left: 6px solid var(--color-error);
 }
 
 .toast-content {
@@ -584,27 +504,25 @@ body {
 }
 
 .toast-text {
-  font-size: 14px;
-  font-weight: 500;
-  color: #f8fafc;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text-main);
 }
 
 .toast-close-btn {
   background: none;
   border: none;
-  color: #94a3b8;
+  color: var(--color-text-muted);
   cursor: pointer;
   padding: 4px;
-  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  transition: color 0.1s ease;
 }
 
 .toast-close-btn:hover {
-  background: rgba(255, 255, 255, 0.05);
-  color: #f8fafc;
+  color: var(--color-text-main);
 }
 
 .toast-close-btn svg {
@@ -616,29 +534,33 @@ body {
 @keyframes toastSlideIn {
   from {
     opacity: 0;
-    transform: translateX(50px) translateY(0);
+    transform: translateX(30px);
   }
   to {
     opacity: 1;
-    transform: translateX(0) translateY(0);
+    transform: translateX(0);
+  }
+}
+
+@keyframes toastSlideInMobile {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
 @media (max-width: 480px) {
   .toast-container {
     top: 16px;
-    right: 24px;
-    left: 24px;
+    right: 16px;
+    left: 16px;
     width: auto;
   }
-  @keyframes toastSlideIn {
-    from {
-      opacity: 0;
-      transform: translateY(-50px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  .toast-card {
+    animation: toastSlideInMobile 0.2s ease forwards;
   }
 }
